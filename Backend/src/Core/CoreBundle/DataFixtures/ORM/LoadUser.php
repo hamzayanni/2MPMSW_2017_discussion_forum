@@ -28,7 +28,10 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface
         $role = $manager->getRepository('CoreBundle:Role')->findOneBy([
             'code' => Role::ROLE_STUDENT
         ]);
-        $group = $manager->getRepository('CoreBundle:Groups')->find("e6eb574a-b745-11e7-8193-7427ead9d9d4");
+
+        $group = $manager->getRepository('CoreBundle:Groups')->findOneBy([
+            'title' => "2MPMSW"
+        ]);
 
         $student1 = new Student();
 
@@ -42,7 +45,6 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface
         $student1->setScore(10);
         $student1->setRole($role);
         $student1->setGroup($group);
-
         $manager->persist($student1);
 
         $student2 = new Student();
@@ -57,7 +59,6 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface
         $student2->setScore(5);
         $student2->setRole($role);
         $student2->setGroup($group);
-
         $manager->persist($student2);
 
         $manager->flush();
@@ -70,6 +71,6 @@ class LoadUser extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 3;
+        return 4;
     }
 }

@@ -10,13 +10,12 @@
 namespace Core\CoreBundle\DataFixtures\ORM;
 
 use Core\CoreBundle\Entity\Groups;
-use Core\CoreBundle\Entity\Role;
-use Core\CoreBundle\Entity\Student;
+use Core\CoreBundle\Entity\Space;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadGroups extends AbstractFixture implements OrderedFixtureInterface
+class LoadSpace extends AbstractFixture implements OrderedFixtureInterface
 {
 
     /**
@@ -26,17 +25,26 @@ class LoadGroups extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $group1 = new Groups();
-        $group1->setTitle("2MPMSW");
-        $manager->persist($group1);
 
-        $group2 = new Groups();
-        $group2->setTitle("3LM3");
-        $manager->persist($group2);
+        $space1 = new Space();
+        $space1->setTitle("java");
+        $manager->persist($space1);
 
-        $group3 = new Groups();
-        $group3->setTitle("1DNI");
-        $manager->persist($group3);
+        $space2 = new Space();
+        $space2->setTitle("java");
+        $manager->persist($space2);
+
+        $space3 = new Space();
+        $space3->setTitle("java");
+        $manager->persist($space3);
+
+        $space4 = new Space();
+        $space4->setTitle("java");
+        $manager->persist($space4);
+
+        $space5 = new Space();
+        $space5->setTitle("java");
+        $manager->persist($space5);
 
         $manager->flush();
     }
@@ -48,6 +56,6 @@ class LoadGroups extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }
