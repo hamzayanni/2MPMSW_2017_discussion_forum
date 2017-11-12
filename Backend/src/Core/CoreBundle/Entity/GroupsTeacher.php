@@ -4,6 +4,7 @@ namespace Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * GroupsTeacher
@@ -36,6 +37,8 @@ class GroupsTeacher
      * @var Groups
      * @ORM\ManyToOne(targetEntity="Core\CoreBundle\Entity\Groups", inversedBy="groupsTeacher", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @JMS\SerializedName("group")
+     * @JMS\Groups({"GroupTeacher"})
      *
      */
     private $groups;

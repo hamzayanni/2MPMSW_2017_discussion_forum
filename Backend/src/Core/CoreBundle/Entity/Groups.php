@@ -25,7 +25,7 @@ class Groups
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @JMS\SerializedName("id")
-     * @JMS\Groups({"Group"})
+     * @JMS\Groups({"Group", "Student", "GroupTeacher"})
      */
     private $id;
 
@@ -34,7 +34,7 @@ class Groups
      *
      * @ORM\Column(name="title", type="string", length=255)
      * @JMS\SerializedName("title")
-     * @JMS\Groups({"Group"})
+     * @JMS\Groups({"Group", "Student", "GroupTeacher"})
      */
     private $title;
 

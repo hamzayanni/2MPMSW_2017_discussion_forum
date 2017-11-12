@@ -11,6 +11,9 @@ use JMS\Serializer\Annotation as JMS;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Core\CoreBundle\Repository\UserRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"user" = "User", "Student" = "Student", "teacher" = "Teacher"})
  */
 class User
 {
@@ -23,7 +26,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @JMS\SerializedName("id")
-     * @JMS\Groups({"Group"})
+     * @JMS\Groups({"Student", "Teacher", "Question", "Response", "GroupTeacher"})
      */
     private $id;
 
@@ -31,6 +34,8 @@ class User
      * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255)
+     * @JMS\SerializedName("first-name")
+     * @JMS\Groups({"Student", "Teacher"})
      */
     private $firstName;
 
@@ -38,6 +43,8 @@ class User
      * @var string
      *
      * @ORM\Column(name="lastName", type="string", length=255)
+     * @JMS\SerializedName("last-name")
+     * @JMS\Groups({"Student", "Teacher"})
      */
     private $lastName;
 
@@ -45,6 +52,8 @@ class User
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @JMS\SerializedName("email")
+     * @JMS\Groups({"Student", "Teacher"})
      */
     private $email;
 
@@ -52,6 +61,8 @@ class User
      * @var int
      *
      * @ORM\Column(name="CIN", type="integer", length=8)
+     * @JMS\SerializedName("cin")
+     * @JMS\Groups({"Student", "Teacher"})
      */
     private $cIN;
 
@@ -59,29 +70,62 @@ class User
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @JMS\SerializedName("username")
+     * @JMS\Groups({"Student", "Teacher"})
      */
     private $username;
 
     /**
      * @var string
      *
+     * @ORM\Column(name="sexe", type="string", length=255, nullable=true)
+     * @JMS\SerializedName("sexe")
+     * @JMS\Groups({"Student", "Teacher"})
+     */
+    private $sexe;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="password", type="string", length=255)
+     * @JMS\SerializedName("password")
+     * @JMS\Groups({"Student", "Teacher"})
      */
     private $password;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="validRegistration", type="boolean")
+     * @JMS\SerializedName("valid-registration")
+     * @JMS\Groups({"Student", "Teacher"})
      */
-    private $status = false;
+    private $validRegistration;
 
     /**
      * @var int
      *
      * @ORM\Column(name="score", type="integer")
+     * @JMS\SerializedName("score")
+     * @JMS\Groups({"Student", "Teacher"})
      */
-    private $score = 0;
+    private $score;
+
+    /**
+     * @var Role
+     * @ORM\ManyToOne(targetEntity="Core\CoreBundle\Entity\Role")
+     * @ORM\JoinColumn(nullable=false)
+     * @JMS\SerializedName("role")
+     * @JMS\Groups({"Student", "Teacher", "Question", "Response", "GroupTeacher"})
+     */
+    private $role;
+
+
+    public function __construct()
+    {
+        $this->validRegistration = false;
+        $this->score = 0;
+    }
 
     /**
      * Get id
@@ -238,30 +282,6 @@ class User
     }
 
     /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return User
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * @return int
      */
     public function getScore()
@@ -280,15 +300,58 @@ class User
     }
 
     /**
-     * @JMS\VirtualProperty("first-last-name")
-     * @JMS\Groups({"Group"})
-     * @return null|string
+     * @return string
      */
-    public function getFullName(){
-        if ($this->firstName && $this->lastName) {
-            return $this->firstName . " " . $this->lastName;
-        }
-        return null;
+    public function getSexe()
+    {
+        return $this->sexe;
     }
+
+    /**
+     * @param string $sexe
+     * @return $this
+     */
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValidRegistration()
+    {
+        return $this->validRegistration;
+    }
+
+    /**
+     * @param bool $validRegistration
+     * @return $this
+     */
+    public function setValidRegistration($validRegistration)
+    {
+        $this->validRegistration = $validRegistration;
+        return $this;
+    }
+
+    /**
+     * @return Role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param Role $role
+     * @return $this
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+
 }
 

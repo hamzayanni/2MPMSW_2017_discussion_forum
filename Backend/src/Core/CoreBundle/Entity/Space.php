@@ -4,6 +4,7 @@ namespace Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Space
@@ -21,6 +22,8 @@ class Space
      * @ORM\Column(name="id", type="guid")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
+     * @JMS\SerializedName("id")
+     * @JMS\Groups({"Space", "Question", "Response"})
      */
     private $id;
 
@@ -28,6 +31,8 @@ class Space
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @JMS\SerializedName("title")
+     * @JMS\Groups({"Space", "Question", "Response"})
      */
     private $title;
 

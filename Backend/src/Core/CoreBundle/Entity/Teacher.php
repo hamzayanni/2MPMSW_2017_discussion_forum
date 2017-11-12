@@ -4,7 +4,7 @@ namespace Core\CoreBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Teacher
@@ -16,21 +16,13 @@ class Teacher extends User
 {
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="id", type="guid")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(name="grad", type="string", length=255)
+     * @JMS\SerializedName("grad")
+     * @JMS\Groups({"Teacher", "GroupTeacher"})
      */
-    private $id;
-
-    /**
-     * @var Role
-     * @ORM\ManyToOne(targetEntity="Core\CoreBundle\Entity\Role")
-     * @ORM\JoinColumn(nullable=false)
-     *
-     */
-    private $role;
+    private $grad;
 
     /**
      * @var ArrayCollection
@@ -46,32 +38,21 @@ class Teacher extends User
         $this->groupsTeacher = new ArrayCollection();
     }
 
-
     /**
-     * Get id
-     *
-     * @return int
+     * @return string
      */
-    public function getId()
+    public function getGrad()
     {
-        return $this->id;
+        return $this->grad;
     }
 
     /**
-     * @return Role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param Role $role
+     * @param string $grad
      * @return $this
      */
-    public function setRole($role)
+    public function setGrad($grad)
     {
-        $this->role = $role;
+        $this->grad = $grad;
         return $this;
     }
 

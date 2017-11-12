@@ -4,6 +4,7 @@ namespace Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Response
@@ -21,6 +22,8 @@ class Response
      * @ORM\Column(name="id", type="guid")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
+     * @JMS\SerializedName("id")
+     * @JMS\Groups({"Response"})
      */
     private $id;
 
@@ -28,6 +31,8 @@ class Response
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * @JMS\SerializedName("description")
+     * @JMS\Groups({"Response"})
      */
     private $description;
 
@@ -51,8 +56,19 @@ class Response
      * @var int
      *
      * @ORM\Column(name="vote", type="integer")
+     * @JMS\SerializedName("vote")
+     * @JMS\Groups({"Response"})
      */
     private $vote;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="bestResponse", type="boolean")
+     * @JMS\SerializedName("best-response")
+     * @JMS\Groups({"Response"})
+     */
+    private $bestResponse = false;
 
 
     /**
@@ -148,5 +164,25 @@ class Response
     {
         return $this->vote;
     }
+
+    /**
+     * @return bool
+     */
+    public function isBestResponse()
+    {
+        return $this->bestResponse;
+    }
+
+    /**
+     * @param bool $bestResponse
+     * @return $this
+     */
+    public function setBestResponse($bestResponse)
+    {
+        $this->bestResponse = $bestResponse;
+        return $this;
+    }
+
+
 }
 

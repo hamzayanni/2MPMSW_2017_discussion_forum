@@ -4,6 +4,7 @@ namespace Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Role
@@ -34,6 +35,8 @@ class Role
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=255)
+     * @JMS\SerializedName("role")
+     * @JMS\Groups({"Student", "Teacher", "Question", "Response", "GroupTeacher"})
      */
     private $role;
 
@@ -41,6 +44,8 @@ class Role
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=255)
+     * @JMS\SerializedName("code")
+     * @JMS\Groups({"Student", "Teacher", "Question", "Response", "GroupTeacher"})
      */
     private $code;
 

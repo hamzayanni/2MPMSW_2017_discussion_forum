@@ -4,6 +4,7 @@ namespace Core\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Question
@@ -21,6 +22,8 @@ class Question
      * @ORM\Column(name="id", type="guid")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
+     * @JMS\SerializedName("id")
+     * @JMS\Groups({"Question", "Response"})
      */
     private $id;
 
@@ -28,6 +31,8 @@ class Question
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @JMS\SerializedName("title")
+     * @JMS\Groups({"Question", "Response"})
      */
     private $title;
 
@@ -35,6 +40,8 @@ class Question
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * @JMS\SerializedName("description")
+     * @JMS\Groups({"Question", "Response"})
      */
     private $description;
 
@@ -42,6 +49,8 @@ class Question
      * @var Space
      * @ORM\ManyToOne(targetEntity="Core\CoreBundle\Entity\Space")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @JMS\SerializedName("space")
+     * @JMS\Groups({"Question", "Response"})
      *
      */
     private $space;
@@ -50,7 +59,8 @@ class Question
      * @var User
      * @ORM\ManyToOne(targetEntity="Core\CoreBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
-     *
+     * @JMS\SerializedName("user")
+     * @JMS\Groups({"Question"})
      */
     private $user;
 
@@ -58,9 +68,26 @@ class Question
     /**
      * @var bool
      *
-     * @ORM\Column(name="status", type="boolean")
+     * @ORM\Column(name="resolved", type="boolean", nullable=true)
+     * @JMS\SerializedName("resolved")
+     * @JMS\Groups({"Question"})
      */
-    private $status;
+    private $resolved;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="hasResponse", type="boolean", nullable=true)
+     * @JMS\SerializedName("has-response")
+     * @JMS\Groups({"Question"})
+     */
+    private $hasResponse;
+
+    public function __construct()
+    {
+        $this->hasResponse = false;
+        $this->resolved = false;
+    }
 
 
     /**
@@ -158,27 +185,36 @@ class Question
     }
 
     /**
-     * Set status
-     *
-     * @param boolean $status
-     *
-     * @return Question
+     * @return bool
      */
-    public function setStatus($status)
+    public function isResolved()
     {
-        $this->status = $status;
-
-        return $this;
+        return $this->resolved;
     }
 
     /**
-     * Get status
-     *
+     * @param bool $resolved
+     */
+    public function setResolved($resolved)
+    {
+        $this->resolved = $resolved;
+    }
+
+    /**
      * @return bool
      */
-    public function getStatus()
+    public function isHasResponse()
     {
-        return $this->status;
+        return $this->hasResponse;
     }
+
+    /**
+     * @param bool $hasResponse
+     */
+    public function setHasResponse($hasResponse)
+    {
+        $this->hasResponse = $hasResponse;
+    }
+
 }
 
