@@ -36,6 +36,19 @@ class Space
      */
     private $title;
 
+    /**
+     * @var string
+     *
+     * @JMS\SerializedName("nbQuestions")
+     * @JMS\Groups({"Space"})
+     */
+    private $nbQuestions;
+
+    public function __construct($nbQuestions = null)
+    {
+        $this->nbQuestions = 0;
+    }
+
 
     /**
      * Get id
@@ -70,5 +83,25 @@ class Space
     {
         return $this->title;
     }
+
+    /**
+     * @return string
+     */
+    public function getNbQuestions()
+    {
+        return $this->nbQuestions;
+    }
+
+    /**
+     * @param string $nbQuestions
+     * @return $this
+     */
+    public function setNbQuestions($nbQuestions)
+    {
+        $this->nbQuestions = $nbQuestions;
+        return $this;
+    }
+
+
 }
 

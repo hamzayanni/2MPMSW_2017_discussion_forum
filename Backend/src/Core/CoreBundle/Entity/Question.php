@@ -215,6 +215,5 @@ class Question
     {
         $this->hasResponse = $hasResponse;
     }
-
 }
 

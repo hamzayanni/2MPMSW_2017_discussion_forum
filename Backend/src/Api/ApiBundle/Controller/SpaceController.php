@@ -7,16 +7,20 @@ use Core\CoreBundle\Entity\Groups;
 use Core\CoreBundle\Entity\Space;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SpaceController extends Controller
 {
     /**
+     * Get all Spaces
+     *
      * @Route("/space")
      */
     public function indexAction()
     {
         $spaces = $this->getDoctrine()->getRepository('CoreBundle:Space')->findAll();
+        $questionRepository = $this->getDoctrine()->getRepository('CoreBundle:Question');
 
         $result = null;
 
@@ -24,9 +28,13 @@ class SpaceController extends Controller
         $jsonResponse = $this->get('api.json.render.service');
 
         if ($spaces) {
+            /** @var Space $space */
             foreach ($spaces as $space) {
+                $questions = $questionRepository->findCountQuestionBySpace($space->getId());
+                $space->setNbQuestions(count($questions));
                 $result[] = $space;
             }
+
             return $jsonResponse->success($result, ['Space'], Response::HTTP_OK, "Success");
         }
 
@@ -34,7 +42,9 @@ class SpaceController extends Controller
     }
 
     /**
-     * @Route("/space/{space}")
+     * Get Space by ID
+     *
+     * @Route("/space/find/{space}")
      * @method("GET")
      * @param Space $space
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -51,5 +61,37 @@ class SpaceController extends Controller
         }
 
         return $jsonResponse->error(Response::HTTP_NOT_FOUND, "error");
+    }
+
+
+    /**
+     * Add new space
+     *
+     * @Route("/space/add")
+     * @method({"POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function addSpace(Request $request)
+    {
+
+        /** @var JsonRenderService $jsonResponse */
+        $jsonResponse = $this->get('api.json.render.service');
+
+        $manager = $this->getDoctrine()->getManager();
+
+        $data = $request->query->all();
+
+        if (isset($data) && key_exists('title', $data)) {
+            $space = new Space();
+            $space->setTitle($data['title']);
+            $manager->persist($space);
+            $manager->flush();
+
+            return $jsonResponse->wrap(200, "success", "Thème ajouté avec succés");
+        }
+
+        return $jsonResponse->wrap(403, "error", "Vérifiér les données");
+
     }
 }

@@ -3,6 +3,7 @@
 namespace Core\CoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * QuestionRepository
@@ -12,4 +13,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class QuestionRepository extends EntityRepository
 {
+    public function findCountQuestionBySpace($space)
+    {
+        $qb = $this->createQueryBuilder('q');
+
+        $qb
+            ->join('CoreBundle:Space', 's', 'WITH', 's.id = q.space')
+            ->where('q.space = :space')->setParameter('space', $space)
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }
