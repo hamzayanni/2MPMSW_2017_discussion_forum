@@ -78,7 +78,7 @@ class Question
      * @var bool
      *
      * @ORM\Column(name="hasResponse", type="boolean", nullable=true)
-     * @JMS\SerializedName("has-response")
+     * @JMS\SerializedName("hasresponse")
      * @JMS\Groups({"Question"})
      */
     private $hasResponse;
