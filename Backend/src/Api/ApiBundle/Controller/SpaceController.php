@@ -72,7 +72,7 @@ class SpaceController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function addSpace(Request $request)
+    public function addSpaceAction(Request $request)
     {
 
         /** @var JsonRenderService $jsonResponse */

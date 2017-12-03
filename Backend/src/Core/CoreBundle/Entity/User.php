@@ -96,7 +96,7 @@ class User
     /**
      * @var boolean
      *
-     * @ORM\Column(name="validRegistration", type="boolean")
+     * @ORM\Column(name="validRegistration", type="boolean", nullable=true)
      * @JMS\SerializedName("valid-registration")
      * @JMS\Groups({"Student", "Teacher"})
      */
@@ -105,7 +105,7 @@ class User
     /**
      * @var int
      *
-     * @ORM\Column(name="score", type="integer")
+     * @ORM\Column(name="score", type="integer", nullable=true)
      * @JMS\SerializedName("score")
      * @JMS\Groups({"Student", "Teacher"})
      */
@@ -119,6 +119,15 @@ class User
      * @JMS\Groups({"Student", "Teacher", "Question", "Response", "GroupTeacher"})
      */
     private $role;
+
+    /**
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\JoinColumn(nullable=true)
+     * @JMS\SerializedName("avatar")
+     * @JMS\Groups({"Student", "Teacher"})
+     */
+    private $media;
 
 
     public function __construct()
@@ -352,6 +361,42 @@ class User
         $this->role = $role;
         return $this;
     }
+
+    /**
+     * @param $password
+     * @return mixed
+     */
+    public function getDecryptedPassword($password)
+    {
+        if ($password) {
+            if (password_verify($password, $this->password)) {
+                return true;
+            }
+            return false;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Media
+     */
+    public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param Media $media
+     * @return $this
+     */
+    public function setMedia(Media $media)
+    {
+        $this->media = $media;
+        return $this;
+    }
+
+
 
 }
 

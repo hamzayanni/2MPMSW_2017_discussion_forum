@@ -18,7 +18,7 @@ class ResponseController extends Controller
      * @param Question $question
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function findResponseByQuestion(Question $question)
+        public function findResponseByQuestionAction(Question $question)
     {
 
         $result = null;

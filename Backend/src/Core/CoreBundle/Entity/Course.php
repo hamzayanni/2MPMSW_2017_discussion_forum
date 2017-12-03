@@ -5,6 +5,7 @@ namespace Core\CoreBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMS;
 
 
 /**
@@ -49,6 +50,15 @@ class Course
      * @ORM\OneToMany(targetEntity="Core\CoreBundle\Entity\CourseGroups", mappedBy="course")
      */
     private $courseGroups;
+
+    /**
+     * @var Media
+     * @ORM\OneToOne(targetEntity="Media")
+     * @ORM\JoinColumn(nullable=true)
+     * @JMS\SerializedName("document")
+     * @JMS\Groups({"Student", "Teacher"})
+     */
+    private $media;
 
     /**
      * Groups constructor.
@@ -140,6 +150,22 @@ class Course
     {
         $this->courseGroups = $courseGroups;
         return $this;
+    }
+
+    /**
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("document_url")
+     * @JMS\Groups({"Course"})
+     */
+    public function getMediaUrl()
+    {
+        if ($this->media) {
+            $url = $this->media->getWebPath();
+            $ext = $this->media->getExtension();
+
+            return $url.".".$ext;
+        }
+        return null;
     }
 
 

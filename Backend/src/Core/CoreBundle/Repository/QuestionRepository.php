@@ -23,4 +23,14 @@ class QuestionRepository extends EntityRepository
         ;
         return $qb->getQuery()->getResult();
     }
+
+    public function searchQuestion($key)
+    {
+        $qb = $this->createQueryBuilder('q');
+
+        $qb
+            ->where('q.title LIKE :key OR q.description LIKE :key')->setParameter('key', '%'.$key.'%');
+        ;
+        return $qb->getQuery()->getResult();
+    }
 }

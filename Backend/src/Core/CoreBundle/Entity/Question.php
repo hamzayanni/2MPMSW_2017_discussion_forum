@@ -2,6 +2,7 @@
 
 namespace Core\CoreBundle\Entity;
 
+use Core\CoreBundle\Traits\UpdateDateTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as JMS;
@@ -15,6 +16,7 @@ use JMS\Serializer\Annotation as JMS;
 class Question
 {
     use TimestampableEntity;
+    use UpdateDateTrait;
 
     /**
      * @var int

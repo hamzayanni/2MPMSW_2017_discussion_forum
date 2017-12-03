@@ -3,6 +3,7 @@
 namespace Api\ApiBundle\Controller;
 
 use Api\ApiBundle\Service\JsonRenderService;
+use Core\CoreBundle\Constants\WSGroupsConstant;
 use Core\CoreBundle\Entity\Groups;
 use Core\CoreBundle\Entity\Teacher;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -74,7 +75,7 @@ class GroupController extends Controller
             foreach ($groups as $group) {
                 $result[] = $group;
             }
-            return $jsonResponse->success($result, ['GroupTeacher'], Response::HTTP_OK, "Success");
+            return $jsonResponse->success($result, [WSGroupsConstant::GROUPTEACHER], Response::HTTP_OK, "Success");
         }
 
         return $jsonResponse->error(Response::HTTP_NOT_FOUND, "error");
