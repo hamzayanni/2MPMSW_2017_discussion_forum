@@ -19,4 +19,9 @@ return  this.http.get('http://localhost/2MPMSW_2017_discussion_forum/Backend/web
          return  this.http.get('http://localhost/2MPMSW_2017_discussion_forum/Backend/web/app_dev.php/docs/group')
            .map(res=>res.json().result);
                 }
-       }
+       
+       getSpace(){
+        return  this.http.get('http://localhost/2MPMSW_2017_discussion_forum/Backend/web/app_dev.php/docs/space')
+          .map(res=>res.json().result);
+               }
+      }

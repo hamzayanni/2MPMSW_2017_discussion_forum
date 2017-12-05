@@ -1,5 +1,156 @@
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 lpad">
+                <div class="logo">
+                    <a href="#">
+                        <span>ISITCOM</span>
+                        <span>forum</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form class="navbar-form navbar-right" role="search" action="#" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="Pseudo" placeholder="Pseudo">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Connexion</button>
+                    </div>
 
+                </form>
+                <div class="signup">
+                    <a href="#">Mot de passe oblier</a>
+                    <a href="#">Créer un compte</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /header -->
+<!-- bloc rearch -->
+<div class="search-bloc">
+    <div class="container search">
+        <div class="raw">
+            <div class="col-md-6">
 
-<div *ngFor="let tab of Tab">
-{{tab.title}}
+            </div>
+            <div class="col-md-6">
+                <form class="navbar-form navbar-right" role="search" action="#" method="POST">
+                    <div class="form-group">
+                        <input type="text" class="form-control input-search" name="username" placeholder="Recherche">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Recherche</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- /bloc rearch -->
+<!-- /bloc question -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="forum-category">
+                <div class="lpad">
+                    Top Qestions
+                </div>
+            </div>
+            <div>
+                <div class="col-md-8 lpad column ">
+                    Forum
+                </div>
+                <div class="col-md-2 lpad column ">
+                    Theme
+                </div>
+                <div class="col-md-2 lpad column ">
+                    Utilisateur
+                </div>
+            </div>
+            <!-- boucle for -->
+            <div *ngFor="let tab of Tab">
+                <div class="forum-topic">
+                    <div class="col-md-1 column-body lpad">
+                        <div class="avatar">
+                            <img src="../../assets/avatar.jpg" alt="">
+
+                        </div>
+                    </div>
+                    <div class="col-md-7 column-body lpad">
+                        <span class="overflow-control">
+
+
+                            {{tab.title}}
+
+
+                        </span>
+
+                    </div>
+                    <div class="col-md-2 column-body lpad">
+                        <span class="overflow-control">
+                           {{tab.space.title }}
+                        </span>
+                    </div>
+                    <div class="col-md-2 column-body pad">
+                        
+                        <span>08-29-2013 7:29PM</span>
+                       
+                    </div>
+                </div>
+            </div>
+            <!-- end boucle for -->
+        </div>
+        <div class="col-md-3">
+            
+            <div class="sidebarblock">
+                <h3>Espaces</h3>
+                <div *ngFor="let sap of Sap">
+                <div class="divline"></div>
+                <div class="blocktxt">
+                    <ul class="cats">
+                        <li>
+                            <a href="#">{{sap.title}}
+                                <span class="badge pull-right">1</span>
+                            </a>
+                        </li>
+                    
+                    </ul>
+                </div>
+            </div>
+</div>
+        </div>
+    </div>
+</div>
+<!-- /bloc question -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="logo">
+                    <a href="#">
+                        <span>ISITCOM</span>
+                        <span>forum</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p>footer 2</p>
+                <p>footer 2</p>
+                <p>footer 2</p>
+                <p>footer 2</p>
+            </div>
+            <div class="col-md-4">
+                <p>footer 3</p>
+                <p>footer 3</p>
+                <p>footer 3</p>
+                <p>footer 3</p>
+            </div>
+        </div>
+    </div>
+</footer>
